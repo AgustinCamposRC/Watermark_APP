@@ -10,8 +10,11 @@ The GUI application is made up of several components, among them, frames, button
 The application allows the user to create between a watermark image and a watermark text, furthermore the user has the ability to customize the watermark by providing the text or image to be transformed into a watermark. You can adjust the watermark position, rotation, font size, font type, opacity and color using the various components of the graphical user interface. In the process, the app converts the image file into RGB to save it later.
 
 ![image](https://github.com/AgustinCamposRC/Watermark_App/assets/130417572/04a7de62-f87f-458b-9ab8-375d1ab1df42)
+
 ![image](https://github.com/AgustinCamposRC/Watermark_App/assets/130417572/cee0a260-ed31-421e-a42d-933a06400e87)
+
 ![image](https://github.com/AgustinCamposRC/Watermark_App/assets/130417572/97020a8f-bd41-4371-a3c6-453043044e7d)
+
 ![image](https://github.com/AgustinCamposRC/Watermark_App/assets/130417572/79991d1d-c065-4ace-a77b-45eda3d12cf9)
 
 
