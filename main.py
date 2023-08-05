@@ -1,11 +1,10 @@
 import ttkbootstrap as ttb
-import tkinter as tk
 from tkinter.colorchooser import askcolor
-import customtkinter as ctk
+import tkinter as tk
 from tkinter import filedialog
 from PIL import Image, ImageTk, ImageDraw, ImageFont
 from matplotlib import font_manager
-from tkinter import messagebox
+
 
 filetypes = (
         ('PNG img', '*.png'),
@@ -90,8 +89,7 @@ class WatermarkGUI:
     '''Watermark App GUI'''
 
     def __init__(self):
-        self.app = tk.Tk()
-
+        self.app = ttb.Window(themename='litera')
         ### Variables
         self.img_path = None 
         self.img_name = None
@@ -123,31 +121,32 @@ class WatermarkGUI:
 
         '''Create App Interface (GUI).'''
 
+        style = ttb.Style()
+        print(style.configure('TButton'))
         ##################################### Nav Mode Bar ########################################
-        nav_menu = ctk.CTkFrame(self.app, fg_color='#262626', corner_radius=5)
+        nav_menu = ttb.Frame(self.app, bootstyle='dark')
         nav_menu.grid(row=0, column=0, sticky='nsew', padx=20, pady=20, ipadx=4, columnspan=2)
         nav_menu.columnconfigure(2, weight=1)
         nav_menu.anchor('w')
 
         titlepart1 = ttb.Label(nav_menu, text='Gust', font=('arial', 22, 'bold'), foreground="#fff", 
-                               anchor='center', background='#262626')
+                               anchor='center', bootstyle='dark inverse')
         titlepart1.grid(row=0, column=0, pady=15, sticky='nsew', padx=8)
 
         titlepart2 = ttb.Label(nav_menu, text='Wm', foreground='#ED7D31', font=('arial', 22, 'bold'), 
-                               anchor='center',background='#262626')
+                               anchor='center', bootstyle='dark inverse')
         titlepart2.grid(row=0, column=1, pady=15, sticky='nsew')
 
-        textOption = tk.Button(nav_menu, text='Text', borderwidth=0, activebackground='#262626',
-                                font=('arial', 15), foreground='white', cursor='hand2', relief='flat',
-                                command=lambda: self.change_watermark_type(0))
-        textOption.grid(row=0, column=2, pady=15, sticky='nse', padx=8)
-        textOption.configure(background='#262626')
-        textOption.bind("<Enter>", lambda e: textOption.configure(foreground='#ED7D31'))
-        textOption.bind("<Leave>", lambda e: textOption.configure(foreground='#fff'))
+        style.configure('dark.TButton', relief='flat', darkcolor='#4582ec',
+                        font=('arial',12,'bold'))
 
-        imageOption = tk.Button(nav_menu, text='Image', foreground='#fff', font=('arial', 15), relief='flat',
-                                cursor='hand2', command=lambda:self.change_watermark_type(1))
-        imageOption.configure(background='#262626')
+        textOption = ttb.Button(nav_menu, text='Text',cursor='hand2', command=lambda: self.change_watermark_type(0),
+                                bootstyle='dark', style='nav.dark.TButton')
+        textOption.grid(row=0, column=2, pady=15, sticky='nse', padx=8)
+
+
+        imageOption = ttb.Button(nav_menu, text='Image', cursor='hand2', command=lambda:self.change_watermark_type(1),
+                                style='nav.dark.TButton')
         imageOption.grid(row=0, column=3, pady=15, padx=20, sticky='nsew')
 
         ###################################### App Body ##############################################
@@ -161,7 +160,7 @@ class WatermarkGUI:
 
         tk.Label(baseimage_frame, text='Base Image:', font=('arial', 16, 'bold')).grid(row=0, column=0, sticky='w')
 
-        baseimage_area = ctk.CTkFrame(baseimage_frame, width=350, height=350, fg_color='#ED7D31', corner_radius=6, )
+        baseimage_area = ttb.Frame(baseimage_frame, width=350, height=350, bootstyle='danger')
         baseimage_area.grid(row=1, column=0)
         baseimage_area.grid_propagate(False)
         baseimage_area.anchor('center')
@@ -169,8 +168,7 @@ class WatermarkGUI:
         self.placeholder_img = Image.open('./img/image_.png')
         self.placeholder_img = ImageTk.PhotoImage(self.placeholder_img.resize(resize(self.placeholder_img.size, 40)))
 
-        self.img = tk.Label(baseimage_area, image=self.placeholder_img)
-        self.img.configure(background='#ED7D31')
+        self.img = ttb.Label(baseimage_area, image=self.placeholder_img, bootstyle='danger inverse')
         self.img.grid(row=0, column=0, sticky='nsew')
 
 
@@ -271,7 +269,7 @@ class WatermarkGUI:
 
         wmi_size_section.rowconfigure(0, weight=1)
         self.wmi_size_label = tk.Label(wmi_size_section, font=('arial', 13, 'bold'), 
-                                       text=f'{int(self.wmi_size.get()*100)}')
+                                       text=f'{int(self.wmi_size.get()*100)}%')
         self.wmi_size_label.grid(row=0, column=1, sticky='nsew', padx=2, pady=4)
 
         #################### Watermark Position Options Section ####################
@@ -411,13 +409,12 @@ class WatermarkGUI:
 
         ttb.Label(baseimage_frame, text='Watermark Image:', font=('arial', 16, 'bold')).grid(row=0, column=0, sticky='w', pady=5)
 
-        overlay_area = ctk.CTkFrame(baseimage_frame, width=350, height=350, fg_color='#ED7D31', corner_radius=6, )
+        overlay_area = ttb.Frame(baseimage_frame, width=350, height=350, bootstyle='danger', )
         overlay_area.grid(row=1, column=0)
         overlay_area.grid_propagate(False)
         overlay_area.anchor('center')
 
-        self.overlayImg = tk.Label(overlay_area, image=self.placeholder_img)
-        self.overlayImg.configure(background='#ED7D31')
+        self.overlayImg = ttb.Label(overlay_area, image=self.placeholder_img, bootstyle='danger inverse')
         self.overlayImg.grid(row=0, column=0, sticky='nsew')
 
         buttons_frame = tk.Frame(baseimage_frame)
