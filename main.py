@@ -7,6 +7,12 @@ from PIL import Image, ImageTk, ImageDraw, ImageFont
 from matplotlib import font_manager
 from tkinter import messagebox
 
+filetypes = (
+        ('PNG img', '*.png'),
+        ('JPG img', '*.jpg'),
+        ('JPEG img', '*.jpeg'),
+        ('All File', '*.*')
+    )
 
 def get_fonts():
     '''Get all system fonts.\n
@@ -33,12 +39,7 @@ def select_file():
     '''Img path selection
     Return Selected Img path. 
     \nExample: C:downloads/hellp.png'''
-    filetypes = (
-        ('PNG img', '*.png'),
-        ('JPG img', '*.jpg'),
-        ('JPEG img', '*.jpeg'),
-        ('All File', '*.*')
-    )
+
     return filedialog.askopenfilename(
         title='Open a file',
         initialdir='/',
@@ -440,7 +441,7 @@ class WatermarkGUI:
     def set_overlay_img(self,):
         """Allow to Set the watermark image """
         self.watermark_img = select_file()
-        if self.watermark_img != '':
+        if self.watermark_img is not None:
             self.selectedOvImg = Image.open(self.watermark_img)
             self.selectedOvImg = ImageTk.PhotoImage(self.selectedOvImg.resize(size=resize_base(self.selectedOvImg.size)))
             self.overlayImg['image'] = self.selectedOvImg
@@ -451,7 +452,7 @@ class WatermarkGUI:
 
     def add_watermark_img(self):
         '''Set watermark img in the base img'''
-        if self.img_path is not None and self.watermark_img != '':
+        if self.img_path is not None and self.watermark_img is not None:
             self.base_img = Image.open(self.img_path) # Take Base img
             overlay_img = Image.open(self.watermark_img) # Take overlay img (watermark img)
             overlay_img = overlay_img.resize(size=(resize(overlay_img.size,int(self.wmi_size.get()*100))))
@@ -652,9 +653,11 @@ class WatermarkGUI:
 
     def save_img(self):
         if self.img_path is not None:
-            path = filedialog.askdirectory()
-            self.result_img.save(path + '/' + self.img_name)
-            messagebox.showinfo(title='New Img', message='Image Save it correctly')
+            path = filedialog.asksaveasfilename(confirmoverwrite=True, initialfile=self.img_name,
+                                                filetypes=(('PNG img', '*.png'),))
+            if path != '':
+                self.result_img.save(path)
+                messagebox.showinfo(title='New Img', message='Image Save it correctly')
 
     
 WatermarkGUI()
