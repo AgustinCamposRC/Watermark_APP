@@ -25,3 +25,31 @@ The application allows the user to create between a watermark image and a waterm
 Once you have customized your watermark, you can save the new image with the watermark by clicking the "Save" button. This allows you to name your watermarked image and save it in the chosen file path. The initial name of the new image is the same as that of the base image.
 
 ![image](https://github.com/AgustinCamposRC/Watermark_App/assets/130417572/6efd8ca4-b7e2-4d6c-ba19-f5e53dd48f24)
+
+## Installation
+1. Clone the repository: 
+```
+https://github.com/AgustinCamposRC/Watermark_App.git
+```
+2. Change directory into the project folder
+3. Create virtual environment: 
+```
+python -m venv venv
+``` 
+```
+venv/Scripts/activate
+```
+4. Install the required packages: 
+```
+pip install -r requirements.txt
+```
+5. Run the `main.py`
+
+## Dependencies
+
+Libraries Used:
+
+✅ Tkinter
+✅ ttkbootstrap
+✅ Pillow
+✅ Matplotlib
